@@ -64,13 +64,54 @@ var wholeQuote=[
         author: " ― Albert Einstein "
     }
 ]
+var viewedWholeQuote=[
+    
+]
+function AddToViewdQuotes(viewdQuoteIndex){
+    viewedWholeQuote.push(viewdQuoteIndex);
+}
+function CheckQuoteExist(newQuoteIndex) {
+    return viewedWholeQuote.includes(newQuoteIndex);
+}
 
-var randomNum = Math.trunc(Math.random() * 15);
+var x = 0;
+function revealQuote() {
+    var randomNum = Math.trunc(Math.random() * 15);
+    console.log("randomNum = " + randomNum);
+    var quoteExist = CheckQuoteExist(randomNum);
+    console.log("quoteExist is " + quoteExist);
 
-function revealQuote(){
-    do{
-        var randomNum = Math.trunc(Math.random() * 15);
+    if(quoteExist == true)
+    {
+        x++;
+        console.log("                    " + x + "                    ")
+        if(viewedWholeQuote.length == wholeQuote.length)
+        {
+            console.log("##################  " + x + "  ##################");
+            console.log(viewedWholeQuote.length + " --- " + wholeQuote.length);
+            document.getElementById("quote").innerHTML = 'No More quotes';
+            document.getElementById("author").innerHTML = 'No More Author';
+            return;
+        }
+
+        if(x == 10000)
+        {
+            console.log('tried reached to ' + x + ' times as max');
+            document.getElementById("quote").innerHTML = 'No More quotes';
+            document.getElementById("author").innerHTML = 'No More Author';
+            x = 0;
+            return;
+        }
+        revealQuote();
+    }
+    else
+    {
+        x = 0;
+        AddToViewdQuotes(randomNum);
         document.getElementById("quote").innerHTML = wholeQuote[randomNum].quote;
         document.getElementById("author").innerHTML = wholeQuote[randomNum].author;
-    }while(randomNum > 15);
-};
+    }
+    
+
+    
+}
